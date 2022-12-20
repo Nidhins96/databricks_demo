@@ -22,3 +22,4 @@ class EventhubConnect:
         ehConf['eventhubs.connectionString'] = self.spark._jvm.org.apache.spark.eventhubs.EventHubsUtils.encrypt(connectionString)
         
         return ehConf
+        return ehConf
