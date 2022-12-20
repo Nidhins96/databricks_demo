@@ -76,12 +76,16 @@ class read_storeconnect_data:
         fd = FormatDelta()
         try:
             new_df= fd.ConverttoDelta(df)
-            self.logger.info("Event logged ", new_df._id)
+            self.logger.info("Event logged ")
         except:
             self.logger.error("Event data processing failed.")
         
-
+        try:
+            st = table_read_write()
+            st.write_to_table(MountFolderpath,new_df)
+            self.logger.info("Event written to delta table ")
+        except:
+            self.logger.error("Event not written to delta table ")
         #The delta tabe schema data is saved to delta table
-        st = table_read_write()
-        st.write_to_table(MountFolderpath,new_df)
+        
     
