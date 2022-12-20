@@ -54,7 +54,7 @@ from pyspark.sql.types import StructType, IntegerType, ArrayType, StringType, Da
 
 # from pyspark.sql.
 # import  pyspark.sql.functions as F
-from pyspark.sql.streaming.listener import StreamingQueryListener
+#from pyspark.sql.streaming.listener import StreamingQueryListener
 
 # COMMAND ----------
 
@@ -80,22 +80,22 @@ consumerGroup= config.get('secrets',  'consumerGroup')
 # observed_df.writeStream.format("...").start()
 
 # Define my listener.
-class MyListener(StreamingQueryListener):
-    def onQueryStarted(self, event):
-        print(f"'{event.name}' [{event.id}] got started!")
-    def onQueryProgress(self, event):
-        row = event.progress.observedMetrics.get("metric")
-        if row is not None:
-            if row.malformed / row.cnt > 0.5:
-                print("ALERT! Ouch! there are too many malformed "
-                      f"records {row.malformed} out of {row.cnt}!")
-            else:
-                print(f"{row.cnt} rows processed!")
-    def onQueryTerminated(self, event):
-        print(f"{event.id} got terminated!")
+# class MyListener(StreamingQueryListener):
+#     def onQueryStarted(self, event):
+#         print(f"'{event.name}' [{event.id}] got started!")
+#     def onQueryProgress(self, event):
+#         row = event.progress.observedMetrics.get("metric")
+#         if row is not None:
+#             if row.malformed / row.cnt > 0.5:
+#                 print("ALERT! Ouch! there are too many malformed "
+#                       f"records {row.malformed} out of {row.cnt}!")
+#             else:
+#                 print(f"{row.cnt} rows processed!")
+#     def onQueryTerminated(self, event):
+#         print(f"{event.id} got terminated!")
 
-# Add my listener.
-spark.streams.addListener(MyListener())
+# # Add my listener.
+# spark.streams.addListener(MyListener())
 
 # COMMAND ----------
 
@@ -117,7 +117,7 @@ df = spark.readStream.format("eventhubs").options(**ehConf).load()
 
 # COMMAND ----------
 
-display(df)
+# display(df)
 
 # COMMAND ----------
 
